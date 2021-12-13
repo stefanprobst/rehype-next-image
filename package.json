@@ -1,0 +1,78 @@
+{
+  "name": "@stefanprobst/rehype-next-image",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    "types": "./src/index.d.ts",
+    "import": "./src/index.js"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "format": "prettier . --list-different --ignore-path .gitignore",
+    "format:fix": "yarn run format --write",
+    "lint": "eslint . --cache --ignore-path .gitignore",
+    "lint:fix": "yarn run lint --fix",
+    "prepare": "simple-git-hooks || true",
+    "test": "uvu test",
+    "validate": "yarn run format && yarn run lint && yarn run test"
+  },
+  "engines": {
+    "node": ">=14.17",
+    "yarn": "1.x"
+  },
+  "dependencies": {
+    "@stefanprobst/is-absolute-url": "^1.0.1",
+    "@types/hast": "^2.3.4",
+    "unified": "^10.1.1",
+    "unist-util-visit": "^4.1.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^15.0.0",
+    "@mdx-js/mdx": "^2.0.0-rc.2",
+    "@stefanprobst/commitlint-config": "^1.0.2",
+    "@stefanprobst/prettier-config": "^2.0.1",
+    "eslint": "^8.4.1",
+    "lint-staged": "^12.1.2",
+    "next": "^12.0.7",
+    "prettier": "^2.5.1",
+    "simple-git-hooks": "^2.7.0",
+    "uvu": "^0.5.2",
+    "vfile": "^5.2.0"
+  },
+  "peerDependencies": {
+    "next": ">=11.1"
+  },
+  "commitlint": {
+    "extends": "@stefanprobst/commitlint-config"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaVersion": 2020
+    },
+    "env": {
+      "es6": true,
+      "node": true
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --cache --fix",
+      "prettier --write"
+    ],
+    "*.d.ts": "prettier --write",
+    "*.@(json|md)": "prettier --write"
+  },
+  "prettier": "@stefanprobst/prettier-config",
+  "simple-git-hooks": {
+    "commit-msg": "yarn commitlint --edit",
+    "pre-commit": "yarn lint-staged",
+    "pre-push": "yarn run validate"
+  }
+}
